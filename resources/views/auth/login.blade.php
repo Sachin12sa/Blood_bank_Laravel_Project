@@ -399,7 +399,7 @@
       @endif
 
       <!-- Form -->
-      <form action="{{ route('login.submit') }}" method="POST">
+      <form action="{{ route('login') }}" method="POST">
         @csrf
 
         <div class="field">
@@ -438,7 +438,7 @@
       </a>
 
       <p class="form-footer">
-        Don't have an account? <a href="{{ route('signup') }}">Sign up</a>
+        Don't have an account? <a href="{{ route('register') }}">Sign up</a>
       </p>
     </div>
 

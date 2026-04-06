@@ -27,7 +27,7 @@ class AuthController extends Controller
         if ($isUser) {
             Auth::login($isUser);
 
-            Return redirect()->route('dashboard')->with('success', 'Login successfully');
+return redirect()->route('dashboard')->with('success', 'Login successfully');
 
         } else {
             // get the avatar URL from Google and save it to the profile field
@@ -46,7 +46,7 @@ class AuthController extends Controller
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => Hash::make('str::random(10)'),
+                'password' => Hash::make(Str::random(10)),
                 'profile' => $filename ?? null,
                 'role' => 'User',
             ]);
@@ -55,7 +55,7 @@ class AuthController extends Controller
             $newUser->sendEmailVerificationNotification();
             
             Auth::login($newUser);
-            return redirect()->route('user')->with('success', 'Login successfully');
+            return redirect()->route('dashboard')->with('success', 'Login successfully');
         }
     }
 
