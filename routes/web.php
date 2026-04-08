@@ -38,8 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::resource('roles', RoleController::class);
-
+// Admin protected roles resource
+Route::middleware(['auth'])->group(function () {
+    Route::resource('roles', RoleController::class);
+});
 
  require __DIR__.'/auth.php';

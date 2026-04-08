@@ -22,6 +22,9 @@
     <a href="#" class="sidebar-link">
         <i class="bi bi-people"></i> Donors
     </a>
+    <a href="{{ route('roles.index') }}" class="sidebar-link">
+        <i class="bi bi-people"></i> Roles & Permissions
+    </a>
 
     <div class="sidebar-divider"></div>
 

@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
-
-         public function googlelogin(){
+    public function googlelogin(){
 
         return Socialite::driver('google')->redirect();
     }
@@ -55,33 +54,39 @@ return redirect()->route('dashboard')->with('success', 'Login successfully');
             $newUser->sendEmailVerificationNotification();
             
             Auth::login($newUser);
-            return redirect()->route('dashboard')->with('success', 'Login successfully');
+    return redirect()->route('dashboard')->with('success', 'Login successfully');
         }
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 
     public function login()
     {
         return view('auth.login');
     }
 
-  
     public function loginSubmit(Request $request)
-{
-    $request->validate([
-        'email'    => 'required|email',
-        'password' => 'required|string',
-    ]);
+    {
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials, $request->has('remember'))) {
-        $request->session()->regenerate();
-        return redirect()->intended('/dashboard')
-                         ->with('success', 'Logged in successfully');
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->route('donor.dashboard')
+                             ->with('success', 'Logged in successfully');
+        }
+
+        return redirect()->route('login')
+                         ->with('error', 'Invalid email or password'); 
     }
-
-    return redirect()->route('login')
-                     ->with('error', 'Invalid email or password'); 
-}
 }
