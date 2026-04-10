@@ -27,6 +27,9 @@
     </a>
 
     <div class="sidebar-divider"></div>
+    <a href="{{ route('admin.users.index') }}" class="sidebar-link">
+        <i class="bi bi-person-lines-fill"></i> Users
+    </a>
 
     <span class="sidebar-label">Reports</span>
     <a href="#" class="sidebar-link">

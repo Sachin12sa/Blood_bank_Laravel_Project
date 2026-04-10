@@ -1,14 +1,45 @@
-# TODO: Implement Roles Delete Functionality [COMPLETED]
+# User Management for Admin with Role Assignment
 
-## Plan Summary
-- Frontend delete button/form already implemented in roles/index.blade.php.
-- Route exists via resource routes.
-- destroy() implemented in RoleController.php ✅
+## Current Progress
+- [x] Step 0: Created/updated TODO.md with steps from approved plan
+- [x] Step 1: Create app/Http/Controllers/Admin/UserController.php
+- [x] Step 2: Create app/Http/Requests/UserUpdateRequest.php
+- [x] Step 3: Edit routes/web.php to add admin.users resource
+- [x] Step 4: Edit resources/views/admin/dashboard.blade.php to add Users sidebar link
 
-## Steps
-- [x] Step 0: Created this TODO.md
-- [x] Step 1: Edit app/Http/Controllers/RoleController.php - Implemented destroy method with user count check, detach permissions, delete role.
-- [x] Step 2: Tests ready - Manual UI testing: /roles → create → delete (no users).
-- [x] Step 3: php artisan cache:clear & php artisan permission:cache-reset run.
-- [x] Step 4: Edge case handled (users_count >0 → error).
-- [x] Step 5: Task complete.
+## Current Progress
+- [x] Step 0: Created/updated TODO.md with steps from approved plan
+- [x] Step 1: Create app/Http/Controllers/Admin/UserController.php
+- [x] Step 2: Create app/Http/Requests/UserUpdateRequest.php
+- [x] Step 3: Edit routes/web.php to add admin.users resource
+- [x] Step 4: Edit resources/views/admin/dashboard.blade.php to add Users sidebar link
+- [x] Step 5: Create resources/views/admin/users/index.blade.php
+
+## Current Progress
+- [x] Step 0: Created/updated TODO.md with steps from approved plan
+- [x] Step 1: Create app/Http/Controllers/Admin/UserController.php
+- [x] Step 2: Create app/Http/Requests/UserUpdateRequest.php
+- [x] Step 3: Edit routes/web.php to add admin.users resource
+- [x] Step 4: Edit resources/views/admin/dashboard.blade.php to add Users sidebar link
+- [x] Step 5: Create resources/views/admin/users/index.blade.php
+- [x] Step 6: Create resources/views/admin/users/create.blade.php
+- [x] Step 7: Create resources/views/admin/users/edit.blade.php
+
+## Current Progress
+- [x] Step 0: Created/updated TODO.md with steps from approved plan
+- [x] Step 1: Create app/Http/Controllers/Admin/UserController.php
+- [x] Step 2: Create app/Http/Requests/UserUpdateRequest.php
+- [x] Step 3: Edit routes/web.php to add admin.users resource
+- [x] Step 4: Edit resources/views/admin/dashboard.blade.php to add Users sidebar link
+- [x] Step 5: Create resources/views/admin/users/index.blade.php
+- [x] Step 6: Create resources/views/admin/users/create.blade.php
+- [x] Step 7: Create resources/views/admin/users/edit.blade.php
+- [x] Step 8: Run php artisan permission:cache-reset
+
+## Task Complete
+All steps finished. User management with role assignment implemented for admins.
+- Feedback fix: Removed password update fields from admin edit form.
+
+Run `php artisan route:list | findstr users` to verify routes.
+Visit /admin/dashboard → Users link → test CRUD/role assign (update no password).
+

@@ -26,7 +26,9 @@
     <a href="{{ route('roles.index') }}" class="sidebar-link">
         <i class="bi bi-people"></i> Roles & Permissions
     </a>
-
+    <a href="{{ route('admin.users.index') }}" class="sidebar-link">
+        <i class="bi bi-person-lines-fill"></i> Users
+    </a>
     <div class="sidebar-divider"></div>
 
     <span class="sidebar-label">Reports</span>

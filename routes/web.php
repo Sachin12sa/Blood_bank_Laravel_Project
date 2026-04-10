@@ -41,6 +41,10 @@ Route::middleware('auth')->group(function () {
 // Admin protected roles resource
 Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RoleController::class);
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    });
 });
 
  require __DIR__.'/auth.php';
