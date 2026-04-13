@@ -8,11 +8,12 @@ class Donation extends Model
 {
     protected $fillable = [
         'donor_id', 'blood_unit_id',
-        'donated_at', 'certificate_path',
+        'donated_at', 'certificate_path', 'status',
     ];
 
     protected $casts = [
         'donated_at' => 'date',
+        'status' => 'string',
     ];
 
     public function donor()
@@ -24,4 +25,15 @@ class Donation extends Model
     {
         return $this->belongsTo(BloodUnit::class);
     }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
 }
+

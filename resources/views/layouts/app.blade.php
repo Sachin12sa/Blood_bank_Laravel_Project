@@ -666,7 +666,7 @@
         </button>
 
         {{-- Brand --}}
-        <a href="{{ route('admin.dashboard') }}" class="brand">
+        <a href="{{ route('dashboard') }}" class="brand">
             <div class="brand-icon">
                 <i class="bi bi-droplet-fill"></i>
             </div>
@@ -696,7 +696,8 @@
             <div class="nav-divider"></div>
 
             {{-- User dropdown --}}
-            {{-- <div class="dropdown">
+            @auth
+            <div class="dropdown">
                 <a class="nav-user dropdown-toggle" data-bs-toggle="dropdown" href="#"
                     style="text-decoration:none; color:inherit">
                     @php
@@ -718,28 +719,21 @@
                         </div>
                     </li>
                     <li>
-                        <a class="dropdown-item rounded-2" href="#">
-                            <i class="bi bi-person me-2"></i> My Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item rounded-2" href="#">
-                            <i class="bi bi-gear me-2"></i> Settings
+                        <a class="dropdown-item rounded-2" href="{{ route('dashboard') }}">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
                         </a>
                     </li>
                     <li>
                         <hr class="dropdown-divider my-1">
                     </li>
                     <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="dropdown-item rounded-2 text-danger" type="submit">
-                                <i class="bi bi-box-arrow-right me-2"></i> Logout
-                            </button>
-                        </form>
+                        <a class="dropdown-item rounded-2 text-danger" href="{{ route('logout') }}">
+                            <i class="bi bi-box-arrow-right me-2"></i> Logout
+                        </a>
                     </li>
                 </ul>
-            </div> --}}
+            </div>
+            @endauth
 
         </div>
     </nav>
