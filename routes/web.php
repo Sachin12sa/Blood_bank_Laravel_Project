@@ -10,6 +10,10 @@ use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\CampaignController;
+use App\Http\Controllers\Admin\AdminDonationController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminBloodInventoryController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PublicController;
@@ -37,11 +41,11 @@ Route::get('/dashboard', function () {
 
 // ── ADMIN ROUTES ────────────────────────────────────────
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('donations', \App\Http\Controllers\Admin\AdminDonationController::class)->only(['index']);
-    Route::patch('donations/{donation}/approve', [\App\Http\Controllers\Admin\AdminDonationController::class, 'approve'])->name('donations.approve');
-    Route::patch('donations/{donation}/reject', [\App\Http\Controllers\Admin\AdminDonationController::class, 'reject'])->name('donations.reject');
+    Route::resource('donations', AdminDonationController::class)->only(['index']);
+    Route::patch('donations/{donation}/approve', [AdminDonationController::class, 'approve'])->name('donations.approve');
+    Route::patch('donations/{donation}/reject', [AdminDonationController::class, 'reject'])->name('donations.reject');
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::resource('users', UserController::class);
     Route::resource('blood-units', BloodUnitController::class);
 
     // Hospitals management
@@ -64,7 +68,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/reports', [AdminDashboardController::class, 'reports'])->name('reports');
     
     // Campaigns
-    Route::resource('campaigns', \App\Http\Controllers\Admin\CampaignController::class);
+    Route::resource('campaigns', CampaignController::class);
+    
+    // Blood Inventory
+    Route::get('/inventories', [AdminBloodInventoryController::class, 'index'])->name('inventories.index');
+    Route::post('/inventories/refresh', [AdminBloodInventoryController::class, 'refreshInventory'])->name('inventories.refresh');
 });
 
 // Roles (admin only)

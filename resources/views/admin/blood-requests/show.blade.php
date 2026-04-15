@@ -2,7 +2,7 @@
 @section('title', 'Request #' . $bloodRequest->id)
 
 @section('sidebar')
-    @include('admin.partials.sidebar', ['active' => 'blood-requests'])
+    @include('admin.partials.sidebar', ['active' => 'donations'])
 @endsection
 
 @section('content')

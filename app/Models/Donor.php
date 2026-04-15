@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Donor extends Model
 {
+    use Notifiable;
+
     protected $fillable = [
         'user_id', 'blood_group', 'phone',
         'address', 'date_of_birth',
@@ -50,7 +53,9 @@ class Donor extends Model
         return $query->where('blood_group', $group);
     }
 
-    // Helper: check if donor is in 56-day cooldown
+    /**
+     * Helper: check if donor is in 56-day cooldown
+     */
     public function isInCooldown(): bool
     {
         if (!$this->last_donated_at) return false;

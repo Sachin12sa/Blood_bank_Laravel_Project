@@ -2,7 +2,7 @@
 @section('title', 'Blood Requests')
 
 @section('sidebar')
-    @include('admin.partials.sidebar', ['active' => 'blood-requests'])
+    @include('admin.partials.sidebar', ['active' => 'blood-units'])
 @endsection
 
 @section('content')

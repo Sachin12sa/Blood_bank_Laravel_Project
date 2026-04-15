@@ -15,14 +15,19 @@ use App\Notifications\DonationApprovedNotification;
 
 class AdminDonationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pendingDonations = Donation::pending()
-            ->with('donor.user')
-            ->latest()
-            ->paginate(15);
+        $query = Donation::with(['donor.user', 'bloodUnit'])
+            ->latest();
 
-        return view('admin.donations.index', compact('pendingDonations'));
+        if ($request->filled('status')) {
+            $query->{$request->status}();
+        }
+
+        $donations = $query->paginate(15);
+        $status = $request->get('status');
+
+        return view('admin.donations.index', compact('donations', 'status'));
     }
 
     public function approve(Donation $donation)
@@ -47,12 +52,15 @@ class AdminDonationController extends Controller
             // Link and approve donation
             $donation->update([
                 'blood_unit_id' => $bloodUnit->id,
-                'status'        => 'approved',
+                'status'        => 'donated',
             ]);
 
-            // Update donor last donation
+            // Update donor last donation and eligibility
             $donor = Donor::find($donation->donor_id);
-            $donor->update(['last_donated_at' => now()]);
+            $donor->update([
+                'last_donated_at' => now(),
+                'is_eligible' => false
+            ]);
 
             // Update inventory
             $inventory = BloodInventory::where('blood_group', $donation->donor->blood_group)->first();

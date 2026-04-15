@@ -35,5 +35,15 @@ class Donation extends Model
     {
         return $query->where('status', 'approved');
     }
+
+    public function scopeDonated($query)
+    {
+        return $query->where('status', 'donated');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', 'rejected');
+    }
 }
 

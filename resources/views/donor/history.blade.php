@@ -66,9 +66,13 @@
                                 </td>
                                 <td>{{ $d->bloodUnit?->expires_at?->format('M d, Y') ?? '—' }}</td>
                                 <td>
-                                    <a href="{{ route('donor.certificate.download', $d) }}" class="btn btn-sm btn-outline-danger rounded-pill">
-                                        <i class="bi bi-download me-1"></i> PDF
-                                    </a>
+                                    @if($d->status === 'donated')
+                                        <a href="{{ route('donor.certificate.download', $d) }}" class="btn btn-sm btn-outline-danger rounded-pill">
+                                            <i class="bi bi-download me-1"></i> PDF
+                                        </a>
+                                    @else
+                                        <span class="text-muted">Pending</span>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

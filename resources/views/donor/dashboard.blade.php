@@ -35,8 +35,8 @@
     @if ($donor)
         {{-- Status Banner --}}
         @if ($donor->isInCooldown())
-            @php
-                $daysLeft = 56 - $donor->last_donated_at->diffInDays(now());
+@php
+$daysLeft = (int) ceil((now()->addDays(56)->diffInDays($donor->last_donated_at, false)));
             @endphp
             <div class="alert alert-warning d-flex align-items-center gap-3 mb-4">
                 <i class="bi bi-hourglass-split fs-5"></i>
@@ -96,7 +96,7 @@
             <div class="col-md-6">
                 <div class="stat-card">
                     <h6 style="font-weight:700;margin-bottom:12px"><i class="bi bi-clock-history me-2"></i>Recent Donations</h6>
-                    @php $recentDonations = $donor->donations()->latest('donated_at')->take(5)->get(); @endphp
+                    {{-- $recentDonations passed from controller --}}
                     @if($recentDonations->isEmpty())
                         <p class="text-muted" style="font-size:.875rem">No donations yet. Make your first donation today!</p>
                     @else
@@ -106,8 +106,28 @@
                                 @foreach($recentDonations as $d)
                                 <tr>
                                     <td>{{ $d->donated_at->format('M d, Y') }}</td>
-                                    <td><span class="badge rounded-pill" style="background:#f0fdf4;color:#22c55e;font-size:.72rem">Completed</span></td>
-                                    <td><a href="{{ route('donor.certificate.download', $d) }}" class="text-decoration-none" style="font-size:.8rem;color:var(--red)"><i class="bi bi-download"></i> PDF</a></td>
+                                    <td>
+                                        @php
+                                            $status = $d->status ?? 'pending';
+                                            $colors = [
+                                                'pending' => ['bg:#fef3c7', 'color:#92400e'],
+                                                'approved' => ['bg:#dbeafe', 'color:#1e40af'],
+                                                'donated' => ['bg:#f0fdf4', 'color:#15803d'],
+                                                'rejected' => ['bg:#fef2f2', 'color:#dc2626'],
+                                            ];
+                                            $color = $colors[$status] ?? $colors['pending'];
+                                        @endphp
+                                        <span class="badge rounded-pill" style="background:{{ $color[0] }};color:{{ $color[1] }};font-size:.72rem">
+                                            {{ ucfirst($status) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($d->status === 'donated')
+                                            <a href="{{ route('donor.certificate.download', $d) }}" class="text-decoration-none" style="font-size:.8rem;color:var(--red)"><i class="bi bi-download"></i> PDF</a>
+                                        @else
+                                            <span class="text-muted" style="font-size:.8rem">—</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

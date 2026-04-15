@@ -27,7 +27,8 @@ class DonorController extends Controller
     public function dashboard()
     {
         $donor = $this->getDonor();
-        return view('donor.dashboard', compact('donor'));
+        $recentDonations = $donor->donations()->with('bloodUnit')->latest('donated_at')->take(5)->get();
+        return view('donor.dashboard', compact('donor', 'recentDonations'));
     }
 
     public function profile()
@@ -101,7 +102,8 @@ class DonorController extends Controller
     public function certificates()
     {
         $donor = $this->getDonor();
-        $donations = Donation::where('donor_id', $donor->id)
+$donations = Donation::where('donor_id', $donor->id)
+                             ->donated()
                              ->with('bloodUnit')
                              ->latest('donated_at')
                              ->get();
@@ -116,6 +118,11 @@ class DonorController extends Controller
         // Ensure the donation belongs to this donor
         if ($donation->donor_id !== $donor->id) {
             abort(403);
+        }
+
+        // Ensure donation is confirmed before certificate access
+        if ($donation->status !== 'donated') {
+            return redirect()->back()->with('error', 'Certificate not available until donation is confirmed.');
         }
 
         // If saved certificate exists, serve it

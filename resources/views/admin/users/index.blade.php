@@ -1,50 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Users Management')
-
 @section('sidebar')
-    <span class="sidebar-label">Main</span>
-    <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
-        <i class="bi bi-speedometer2"></i> Dashboard
-    </a>
-
-    <span class="sidebar-label">Management</span>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-hospital"></i> Hospitals
-        <span class="s-badge warn">{{ $pendingHospitals }}</span>
-    </a>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-droplet-half"></i> Blood Units
-    </a>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-clipboard-pulse"></i> Blood Requests
-        <span class="s-badge">{{ $pendingRequests }}</span>
-    </a>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-people"></i> Donors
-    </a>
-    <a href="{{ route('roles.index') }}" class="sidebar-link">
-        <i class="bi bi-people"></i> Roles & Permissions
-    </a>
-    <a href="{{ route('admin.users.index') }}" class="sidebar-link active">
-        <i class="bi bi-person-lines-fill"></i> Users
-    </a>
-
-    <div class="sidebar-divider"></div>
-
-    <span class="sidebar-label">Reports</span>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-bar-chart-line"></i> Analytics
-    </a>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-file-earmark-text"></i> Reports
-    </a>
-
-    <div class="sidebar-divider"></div>
-
-    <span class="sidebar-label">System</span>
-    <a href="#" class="sidebar-link">
-        <i class="bi bi-gear"></i> Settings
-    </a>
+    @include('admin.partials.sidebar', ['active' => 'users'])
 @endsection
 
 @section('content')
